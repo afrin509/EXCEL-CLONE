@@ -131,6 +131,7 @@ body{
 }
 
 .selected-cell{
+   /* box showing the address of selected cell */
     width: 120px;
     text-align: center;
     display: flex;
@@ -140,11 +141,17 @@ body{
 /************************* CELLS CONTAINER ***************************************/
 .data-container{
     /* height:75vh; */
-    height:calc(100vh - ( 2.5rem + 2.5rem + 2.8rem + 2.5rem + 2rem) );
-    display: flex;
-    flex-wrap: wrap;
+    /* height of following are deducted : title-bar,menu-bar,menu-icon-bar,formula-bar,sheet-bar */
+   display: flex;
+  position: relative;
+   height:calc(100vh - ( 2.5rem + 2.5rem + 2.8rem + 2.5rem + 2rem) );
+
+   flex-wrap: wrap;
+    /* flex-direction: row; */
+    /* overflow: scroll will hide all overflowing content and cause scroll bars to appear on the element in question. If the content does not overflow, the scrollbars will still be visible, but disabled.
+overflow: auto is very similar, but the scrollbars only appear when the content is overflowing.*/
     overflow:scroll; 
-    position: relative;
+    /* so that data continer moves to the position where we it dont have elements present there */
 }
 
 .select-all{
@@ -154,13 +161,22 @@ body{
     width: 2rem;
     border:1px solid lightgray;
     background-color: gray;
-    position: fixed;
-    z-index: 5;
+    /* margin-top: 0rem; */
+    /*  for the select all(gray box) we provide some left spacing */
+    /* margin-left: 0rem; */
+    top:0rem;
+    left:0 rem;
+    /* z-index: 3; */
+    position: absolute;
+  
+  
 }
-
+/* where each column headers will be present like A,B,C,D, other wise called as top row of data container */
 .column-name-container{
     /* width:calc(100vw - 30px); */
     /* height:30px; */
+    position: absolute;
+
     height: 2rem;
     border: 1px solid lightgray;
     display: flex;
@@ -169,12 +185,17 @@ body{
     left: 2rem; */
     /* background-color: lightgray; */
     background-color: rgb(241,241,241);
-
-    position: sticky;
-    top: 0px;
-    left: 2rem;
-    z-index: 3;
+    /* even when we scrolle towards top we dont want this top row/column_name_container to move towards top  */ 
+   
+  /* top: 0rem;
+    /*  for the select all(gray box) we provide some left spacing */
+    /* margin-left: 2rem;
+    z-index: 3; */ 
+    top:0rem;
+    left:2rem;
+    /* z-index: 3; */
 }
+/* where each row sidebar will be present like 1,2,3,4,5 other wise called as left_column of data container */
 
 .row-name-container{
     /* width:30px; */
@@ -186,11 +207,13 @@ body{
     /* overflow: hidden; */
     /* background-color: lightgray; */
     background-color: rgb(241,241,241);
-
-    position: sticky;
+  /* even when we scrolle towards left we dont want this left column/row_name_container to move towards left */
+    /* position: sticky; */
+    /* for the select all(gray box) we provide some left spacing */
     top: 2rem;
     left: 0rem;
-    z-index: 3;
+    position: absolute;
+    /* z-index: 3; */
 }
 
 .input-cell-container{
@@ -202,13 +225,15 @@ body{
     top: 2rem;
     left: 2rem;
 }
-
+ /*each cell in the top row above grid continer/cell in the column_name_container */
+   
 .column-name{
+   /* because flex in column_name_container will try to strech the items to make it fit within the container so we have to provide certain min width so that it wont blur the content  */
     min-width:100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-right: 1px solid lightgray;
+    border-right: 5px solid lightgray; 
     font-weight: "bold";
 }
 
@@ -216,6 +241,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    /* because flex in row_name_container will try to strech the items to make it fit within the container so we have to provide certain min height so that it wont blur the content  */ 
+   
     min-height:25px;
     border-bottom: 1px solid lightgray;
 }
@@ -232,9 +259,6 @@ body{
     outline-color:  #107c41;
 }
 
-.input-cell.selected{
-    border: 2px solid #107c41;
-}
 
 .input-cell.selected1{
     border: 3px solid #107c41;
@@ -276,6 +300,7 @@ body{
 
 .sheet-tab-container{
     border: 1px solid lightgray;
+    /* 110px=70px(scroller)+40px(add button) */
     width:calc(100vw - 110px);
     display: flex;
     align-content: space-around;

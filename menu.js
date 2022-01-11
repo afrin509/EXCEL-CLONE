@@ -4,7 +4,7 @@ let homeIcon = document.querySelector(".menu-home");
 let fileBar = document.getElementById("file");
 let homeBar = document.getElementById("home");
 
-// Function for working of file and home buttons
+// Function for working of file and home buttons vice versa rule
 fileIcon.addEventListener("click", () => {
     homeIcon.classList.remove("selected");
     fileIcon.classList.add("selected");
@@ -30,7 +30,7 @@ fontSizeInput.addEventListener("change", function () {
     // change fontSize property
     tobeChangedCell.style.fontSize = fontSize+"px";
 
-    // change in database
+    // change in database it will in further when you come to this sheet this helps to change the default styles of html using dom
     db[ridcidObj.rid][ridcidObj.cid].fontSize = fontSize;
 })
 

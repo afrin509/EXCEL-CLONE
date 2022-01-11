@@ -9,19 +9,22 @@ for (let i = 1; i <= 100; i++) {
 
   let rowDiv = document.createElement("div");
   rowDiv.setAttribute("class", "row-name");
-
+//  for writing the columns in form of "AA","AB","AC","AD"...........after 26
   let ans = "";
   let n = i;
   while (n > 0) {
     let rem = n % 26;
     if (rem == 0) {
       ans = "Z" + ans;
+    //   Math.floor() function returns the largest integer
+    //   less than or equal to a given number.
       n = Math.floor(n / 26) - 1;
     } else {
       ans = String.fromCharCode(rem - 1 + 65) + ans;
       n = Math.floor(n / 26);
     }
   }
+//   appending each column to column_name_container div
   colDiv.innerText = ans;
   column_name.appendChild(colDiv);
 
@@ -46,8 +49,9 @@ for (let i = 0; i < 100; i++) {
     //   every cell identification required
     div.setAttribute("rId", i);
     div.setAttribute("cId", j);
+    // putting each cell in a row
     row.appendChild(div);
   }
-
+//  putting each row in 2d grid
   inputCellContainer.appendChild(row);
 }

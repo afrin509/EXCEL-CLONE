@@ -5,46 +5,73 @@ let newInput = document.querySelector(".icon-open");
 
 downloadBtn.addEventListener("click", function (e) {
 
-    // anchor create
-    let a = document.createElement("a");
-    // file put -> db array 
-    var StringCode = encodeURIComponent(JSON.stringify(sheetDB));
-    var dataStr = "data:text/json;charset=utf-8," +
-        StringCode;
-    a.href = dataStr;
-    a.download = "file.json";
-    // anchor click
-    a.click();
-
-    // Excel download but dont work with styling
-    // styling -> pass
-    // var ws = XLSX.utils.json_to_sheet(db);
-    // var wb = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(wb, ws, "sheet1");
-    // XLSX.writeFile(wb, "file.xlsx");
+      //2d arrayy save file 
+      
+      const data = JSON.stringify(sheetDB);
+      console.log(data);
+      // convert it into blob
+      // data -> file like object convert
+      const blob = new Blob([data], { type: 'application/json' });
+      // convert it any type file into url
+      const url = window.URL.createObjectURL(blob);
+      let a = document.createElement("a");
+      // content in that file
+      a.href = url;
+      // file download
+      a.download = "file.json";
+      // anchor click
+      a.click();
 })
 openBtn.addEventListener("click", function (e) {
     openInput.click();
 })
 openInput.addEventListener("change", function (e) {
-    let filesArr = openInput.files;
-    // first file select 
+  let filesArr = openInput.files;
+
+    // // first file select 
     let file = filesArr[0];
+    console.log("file",file)
     // fileReader -> browser inbuilt
     const reader = new FileReader();
     // read as text 
     reader.readAsText(file);
+    // console.log("reader.readAs",reader.readAsText(file))
     reader.addEventListener('load', (event) => {
         // img.src = event.target.result;
-        let JSONdata = JSON.parse(event.target.result);
+       // console.log("event.target.result",reader.result)
+var stringifyObj = JSON.stringify(reader.result); 
+// let sheetArray = JSON.parse(stringifyObj);
+     let JSONdata = JSON.parse(reader.result);
+     console.log(JSONdata)
         sheetDB = JSONdata
-        db = sheetDB[0]
+        
+        // db = sheetDB[0]
         // console.log(db);
+        
         setUI1();
-        for(let i = 0 ; i < sheetDB.length - 1 ; i++){
-            sheetOpenHandler();
-        }
+       
+        
     });
+// let filesArray =openInput.files;
+// console.log(filesArray)
+// let fileObj = filesArray[0];
+// // file reader to read the file
+// let fr = new FileReader();
+// // read as text 
+// fr.readAsText(fileObj);
+// fr.onload = function () {
+//     // 3 darray
+//     console.log(fr.result);
+//     // sheet array 
+//     var stringifyObj = JSON.stringify(fr.result); 
+// let sheetArray = JSON.parse(stringifyObj);
+//     sheetDB = sheetArray;
+//     // first sheet db get 
+//     // setUI1();
+//     console.log("hi");
+// }
+
+     
 })
 
 newInput.addEventListener("click", () => {
@@ -68,7 +95,8 @@ function setUI1() {
         for (let j = 0; j < 100; j++) {
             //    set all the properties on ui with matchiing rid,cid
             let cellObject = db[i][j];
-            let tobeChangedCell = document.querySelector(`.input-cell[rId='${i}'][cId='${j}']`);
+            console.log(cellObject)
+            let tobeChangedCell = document.querySelector(`.input-cell[rid='${i}'][cid='${j}']`);
             // console.log(cellObject.value);
             // console.log(tobeChangedCell)
             tobeChangedCell.innerText = cellObject.value;
